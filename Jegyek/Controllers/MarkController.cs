@@ -12,12 +12,12 @@ namespace Jegyek.Controllers
     {
         Connect connect = new Connect();
         [HttpGet]
-        public ActionResult<IEnumerable<CreateMark>> Get()
+        public ActionResult<IEnumerable<MarkDTO>> Get()
         {
             try
             {
                 connect.Connection.Open();
-                List<CreateMark> jegyek = new List<CreateMark>();
+                List<MarkDTO> jegyek = new List<MarkDTO>();
                 string sql = $"Select * From jegyek";
                 MySqlCommand Command = new MySqlCommand(sql, connect.Connection);
                 var olv = Command.ExecuteReader();
@@ -27,7 +27,7 @@ namespace Jegyek.Controllers
                     int Mark = olv.GetInt16(1);
                     string Description = olv.GetString(2);
                     DateTime CreatedTime = olv.GetDateTime(3);
-                    jegyek.Add(new CreateMark(Guid.Parse(Id), Mark, Description, CreatedTime.ToString()));
+                    jegyek.Add(new MarkDTO(Guid.Parse(Id), Mark, Description, CreatedTime.ToString()));
                 }
 
                 connect.Connection.Close();
@@ -39,7 +39,7 @@ namespace Jegyek.Controllers
             }
         }
         [HttpGet("{Id}")]
-        public ActionResult<CreateMark> GetMark(Guid Id)
+        public ActionResult<MarkDTO> GetMark(Guid Id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Jegyek.Controllers
                     int Mark = olv.GetInt16(1);
                     string Description = olv.GetString(2);
                     DateTime CreatedTime = olv.GetDateTime(3);
-                    return new CreateMark(Guid.Parse(id), Mark, Description, CreatedTime.ToString());
+                    return new MarkDTO(Guid.Parse(id), Mark, Description, CreatedTime.ToString());
                 }
                 connect.Connection.Close();
                 return NotFound();
@@ -90,7 +90,7 @@ namespace Jegyek.Controllers
             }
         }
         [HttpPut("{id}")]
-        public ActionResult<CreateMark> Put(UpdateMark updateMark, Guid Id)
+        public ActionResult<MarkDTO> Put(UpdateMark updateMark, Guid Id)
         {
             try
             {
