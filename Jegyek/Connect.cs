@@ -13,7 +13,7 @@ namespace Jegyek
         public Connect()
         {
             Host = "localhost";
-            DbName = "jegyek";
+            DbName = "Jegyek";
             UserName = "root";
             Password = "rootpwd";
             ConnectionString = $"server={Host};database={DbName};user={UserName};password={Password}";
