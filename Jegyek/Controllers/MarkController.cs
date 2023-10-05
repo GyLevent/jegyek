@@ -33,7 +33,7 @@ namespace Jegyek.Controllers
                 connect.Connection.Close();
                 return jegyek;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -84,13 +84,31 @@ namespace Jegyek.Controllers
                 connect.Connection.Close();
                 return StatusCode(201, NewMark);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
-
+        [HttpPut("{id}")]
+        public ActionResult<CreateMark> Put(UpdateMark updateMark, Guid Id)
+        {
+            try
+            {
+                connect.Connection.Open();
+                string sqlinput = $"UPDATE `jegyek` SET `Mark`=@Mark, `Description`=@Description WHERE Id = @Id";
+                MySqlCommand command = new MySqlCommand(sqlinput, connect.Connection);
+                command.Parameters.AddWithValue("Mark", updateMark.Mark);
+                command.Parameters.AddWithValue("Description", updateMark.Description);
+                command.Parameters.AddWithValue("Id", Id);
+                command.ExecuteNonQuery();
+                connect.Connection.Close();
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpDelete("{Id}")]
 
 
