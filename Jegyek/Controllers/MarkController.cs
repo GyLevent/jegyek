@@ -78,7 +78,7 @@ namespace Jegyek.Controllers
             try
             {
                 connect.Connection.Open();
-                string sqlinput = $"INSERT INTO jegyek(Id,Mark,Description,CreatedTime) VALUES ('{NewMark.Id}','{NewMark.Mark}','{NewMark.Description}','{NewMark.CreatedTime}'";
+                string sqlinput = $"INSERT INTO jegyek(Id,Mark,Description,CreatedTime) VALUES ('{NewMark.Id}','{NewMark.Mark}','{NewMark.Description}','{NewMark.CreatedTime}')";
                 MySqlCommand command = new MySqlCommand(sqlinput, connect.Connection);
                 command.ExecuteNonQuery();
                 connect.Connection.Close();
