@@ -19,7 +19,7 @@ namespace Jegyek.Controllers
                 connect.Connection.Open();
                 List<CreateMark> jegyek = new List<CreateMark>();
                 string sql = $"Select * From jegyek";
-                MySqlCommand Command = new MySqlCommand();
+                MySqlCommand Command = new MySqlCommand(sql, connect.Connection);
                 var olv = Command.ExecuteReader();
                 while (olv.Read())
                 {
@@ -39,6 +39,30 @@ namespace Jegyek.Controllers
             }
         }
         [HttpGet("{Id}")]
+        public ActionResult<CreateMark> GetMark(Guid Id)
+        {
+            try
+            {
+                connect.Connection.Open();
+                string sql = $"Select * From jegyek Where Id = '{Id}'";
+                MySqlCommand Command = new MySqlCommand(sql, connect.Connection);
+                var olv = Command.ExecuteReader();
+                while (olv.Read())
+                {
+                    string id = olv.GetString(0);
+                    int Mark = olv.GetInt16(1);
+                    string Description = olv.GetString(2);
+                    DateTime CreatedTime = olv.GetDateTime(3);
+                    return new CreateMark(Guid.Parse(id), Mark, Description, CreatedTime.ToString());
+                }
+                connect.Connection.Close();
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost]
         [HttpPut]
         [HttpDelete]
