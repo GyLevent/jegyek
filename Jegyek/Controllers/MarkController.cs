@@ -89,7 +89,7 @@ namespace Jegyek.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("{id}")]
+        [HttpPut("{Id}")]
         public ActionResult<MarkDTO> Put(UpdateMark updateMark, Guid Id)
         {
             try
@@ -119,6 +119,7 @@ namespace Jegyek.Controllers
                 MySqlCommand command = new MySqlCommand( sqlinput, connect.Connection);
                 command.Parameters.AddWithValue("Id",Id); 
                 command.ExecuteNonQuery();
+
                 connect.Connection.Close();
                 return Ok();
             }
