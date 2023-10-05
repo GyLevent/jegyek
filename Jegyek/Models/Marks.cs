@@ -1,6 +1,6 @@
 ﻿namespace Jegyek.Models
 {
-    public class Jegyek
+    public class Marks
     {
         public Guid Id { get; set; }
         public int Mark { get; set; }

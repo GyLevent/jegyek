@@ -64,8 +64,34 @@ namespace Jegyek.Controllers
             }
         }
         [HttpPost]
+        public ActionResult<Marks> Post(CreateMark createMark)
+        {
+            DateTime dateTime = DateTime.Now;
+            string timenow = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            var NewMark = new Marks
+            {
+                Id = Guid.NewGuid(),
+                Mark = createMark.Mark,
+                Description = createMark.Description,
+                CreatedTime = timenow
+            };
+            try
+            {
+                connect.Connection.Open();
+                string sqlinput = $"INSERT INTO jegyek(Id,Mark,Description,CreatedTime) VALUES ('{NewMark.Id}','{NewMark.Mark}','{NewMark.Description}','{NewMark.CreatedTime}'";
+                MySqlCommand command = new MySqlCommand(sqlinput, connect.Connection);
+                command.ExecuteNonQuery();
+                connect.Connection.Close();
+                return StatusCode(201, NewMark);
+            }
+            catch(Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPut]
-        [HttpDelete]
+
+        [HttpDelete("{Id}")]
 
 
 
