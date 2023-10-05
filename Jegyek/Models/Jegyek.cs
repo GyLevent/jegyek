@@ -2,10 +2,10 @@
 {
     public class Jegyek
     {
-        public Guid Azon { get; set; }
-        public int jegy { get; set; }
-        public string leiras { get; set; }
-        public string letrehozas { get; set; }
+        public Guid Id { get; set; }
+        public int Mark { get; set; }
+        public string Description { get; set; }
+        public string Created { get; set; }
 
 
     }
