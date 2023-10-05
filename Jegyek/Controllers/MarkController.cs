@@ -110,7 +110,23 @@ namespace Jegyek.Controllers
             }
         }
         [HttpDelete("{Id}")]
-
+        public ActionResult MarkDelete(Guid Id) 
+        {
+            try
+            {
+                connect.Connection.Open();
+                string sqlinput = $"DELETE FROM jegyek WHERE Id=@Id";
+                MySqlCommand command = new MySqlCommand( sqlinput, connect.Connection);
+                command.Parameters.AddWithValue("Id",Id); 
+                command.ExecuteNonQuery();
+                connect.Connection.Close();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 
